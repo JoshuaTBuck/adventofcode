@@ -31,7 +31,7 @@ public class Day5 {
                 }
                 passport = passport.substring(1);
             }
-            if(rowL * 8 + colL > seatID){
+            if (rowL * 8 + colL > seatID) {
                 seatID = rowL * 8 + colL;
             }
         }
@@ -41,7 +41,7 @@ public class Day5 {
 
     private void task2() {
         ArrayList<String> passports = FetchData.getDataAsArrayList(year, day);
-        Point[] point = new Point[1024];
+        boolean[] seatTaken = new boolean[1024];
         int seatID = Integer.MIN_VALUE;
 
         for (String passport : passports) {
@@ -59,26 +59,17 @@ public class Day5 {
                 passport = passport.substring(1);
             }
             seatID = rowL * 8 + colL;
-            point[seatID] = new Point(colL, rowL);
+            seatTaken[seatID] = true;
         }
 
-        for (int y = 0; y < point.length; y++) {
-            if (point[y] == null) {
-                if (y > 0 && y < point.length - 1) {
-                    if (point[y - 1] != null && point[y + 1] != null) {
+        for (int y = 0; y < seatTaken.length; y++) {
+            if (!seatTaken[y]) {
+                if (y > 0 && y < seatTaken.length - 1) {
+                    if (seatTaken[y - 1] && seatTaken[y + 1]) {
                         System.out.println(y);
                     }
                 }
             }
-        }
-    }
-
-    private class Point {
-        public int x, y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
         }
     }
 }
